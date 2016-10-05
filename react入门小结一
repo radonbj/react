@@ -1,0 +1,119 @@
+React.render 是 React 的最基本方法，用于将模板转为 HTML 语言，并插入指定的 DOM 节点。
+
+
+React.render(
+    <h1>Hello, world!</h1>,
+    document.getElementById('example')
+);
+react并不依赖jQuery，当然我们可以使用jQuery，但是render里面第二个参数必须使用JavaScript原生的
+
+getElementByID方法，不能使用jQuery来选取DOM节点。
+
+
+组件化:
+ReactJS是基于组件化的开发，下面我们开始来学习ReactJS里面的组件，React 允许将代码封装成组件
+
+（component），然后像插入普通 HTML 标签一样，在网页中插入这个组件。React.createClass 方法就用于生
+
+成一个组件类。
+
+一.组件属性：
+1）获取属性的值用的是this.props.属性名
+2）创建的组件名称首字母必须大写。
+3）为元素添加css的class时，要用className。
+4）组件的style属性的设置方式也值得注意，要写成style={{width: this.state.witdh}}。
+
+组件两个核心概念：
+props
+state
+一个组件就是通过这两个属性的值在 render 方法里面生成这个组件对应的 HTML 结构。
+注意：组件生成的 HTML 结构只能有一个单一的根节点。
+props
+前面也提到很多次了，props 就是组件的属性，由外部通过 JSX 属性传入设置，一旦初始设置完成，就可以认为 this.props 是不可更改的，所以不要轻易更改设置 this.props 里面的值（虽然对于一个 JS 对象你可以做任何事）。
+state
+state 是组件的当前状态，可以把组件简单看成一个“状态机”，根据状态 state 呈现不同的 UI 展示。
+一旦状态（数据）更改，组件就会自动调用 render 重新渲染 UI，这个更改的动作会通过 this.setState 方法来触发。
+划分状态数据
+一条原则：让组件尽可能地少状态。
+这样组件逻辑就越容易维护。
+什么样的数据属性可以当作状态？
+当更改这个状态（数据）需要更新组件 UI 的就可以认为是 state，下面这些可以认为不是状态：
+可计算的数据：比如一个数组的长度
+和 props 重复的数据：除非这个数据是要做变更的
+最后回过头来反复看几遍 Thinking in React，相信会对组件有更深刻的认识。
+
+
+
+二.组件状态
+
+组件免不了要与用户互动，React 的一大创新，就是将组件看成是一个状态机，一开始有一个初始状态，然后
+
+用户互动，导致状态变化，从而触发重新渲染 UI 。
+
+下面我们来编写一个小例子，一个文本框和一个button，通过点击button可以改变文本框的编辑状态，禁止编
+
+辑和允许编辑。
+这里，我们又使用到了一个方法getInitialState,这个函数在组件初始化的时候执行，必需返回NULL或者一个
+
+对象。这里我们可以通过this.state.属性名来访问属性值，这里我们将enable这个值跟input的disabled绑定
+
+，当要修改这个属性值时，要使用setState方法。我们声明handleClick方法，来绑定到button上面，实现改变
+
+state.enable的值。
+原理分析：
+
+当用户点击组件，导致状态变化，this.setState 方法就修改状态值，每次修改以后，自动调用 this.render 
+
+方法，再次渲染组件。
+
+这里值得注意的几点如下：
+
+1）getInitialState函数必须有返回值，可以是NULL或者一个对象。
+
+2）访问state的方法是this.state.属性名。
+
+3）变量用{}包裹，不需要再加双引号。
+
+三、组件的生命周期
+
+组件的生命周期分成三个状态：
+
+Mounting：已插入真实 DOM
+Updating：正在被重新渲染
+Unmounting：已移出真实 DOM
+React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三
+
+种状态共计五种处理函数。
+
+componentWillMount()
+componentDidMount()
+componentWillUpdate(object nextProps, object nextState)
+componentDidUpdate(object prevProps, object prevState)
+componentWillUnmount()
+此外，React 还提供两种特殊状态的处理函数。
+
+componentWillReceiveProps(object nextProps)：已加载组件收到新的参数时调用
+shouldComponentUpdate(object nextProps, object nextState)：组件判断是否重新渲染时调用
+
+四、组件的嵌套（复用）
+这里我们创建了一个Search组件，然后又创建了一个Page组件，然后我们在Page组件中调用Search组件，并且
+
+调用
+
+
+五、ReactJS小结
+关于ReactJS今天就先学习到这里了，下面来总结一下，主要有以下几点：
+
+1、ReactJs是基于组件化的开发，所以最终你的页面应该是由若干个小组件组成的大组件。
+
+2、可以通过属性，将值传递到组件内部，同理也可以通过属性将内部的结果传递到父级组件(留给大家研究)；
+
+要对某些值的变化做DOM操作的，要把这些值放到state中。
+
+3、为组件添加外部css样式时，类名应该写成className而不是class;添加内部样式时，应该是style=
+
+{{opacity: this.state.opacity}}而不是style="opacity:{this.state.opacity};"。
+
+4、组件名称首字母必须大写。
+
+5、变量名用{}包裹，且不能加双引号。
